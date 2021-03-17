@@ -1,11 +1,11 @@
 package com.mahim.petclinic.service.map;
 
 import com.mahim.petclinic.model.Pet;
-import com.mahim.petclinic.service.CrudService;
+import com.mahim.petclinic.service.PetService;
 
 import java.util.Set;
 
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements CrudService<Pet, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
     @Override
     public Pet save(Pet object) {
         return super.save(object.getId(), object);
