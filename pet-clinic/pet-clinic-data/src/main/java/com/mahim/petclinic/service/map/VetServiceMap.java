@@ -2,9 +2,11 @@ package com.mahim.petclinic.service.map;
 
 import com.mahim.petclinic.model.Vet;
 import com.mahim.petclinic.service.VetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Vet save(Vet object) {
