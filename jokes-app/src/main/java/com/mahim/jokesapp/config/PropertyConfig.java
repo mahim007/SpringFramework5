@@ -1,15 +1,23 @@
 package com.mahim.jokesapp.config;
 
 import com.mahim.jokesapp.FakeDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 
 @Configuration
 @PropertySource("classpath:datasource.properties")
 public class PropertyConfig {
+
+    Environment env;
+
+    public PropertyConfig(Environment env) {
+        this.env = env;
+    }
 
     @Value("${jokesapp.user}") String user;
     @Value("${jokesapp.password}") String password;
@@ -17,7 +25,7 @@ public class PropertyConfig {
 
     @Bean
     public FakeDataSource fakeDataSource() {
-        FakeDataSource fakeDataSource = new FakeDataSource(user, password, dbUrl);
+        FakeDataSource fakeDataSource = new FakeDataSource(env.getProperty("MAHIM_USERNAME"), password, dbUrl);
         System.out.println("FakeDataSource:  " +  fakeDataSource);
         return fakeDataSource;
     }
