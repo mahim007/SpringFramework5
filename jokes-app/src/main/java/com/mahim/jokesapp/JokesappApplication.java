@@ -11,6 +11,9 @@ public class JokesappApplication {
         ConfigurableApplicationContext context = SpringApplication.run(JokesappApplication.class, args);
         FakeDataSource fakeDataSource = context.getBean(FakeDataSource.class);
         System.out.println("Application class: " + fakeDataSource);
+
+        FakeJmsBroker fakeJmsBroker = context.getBean(FakeJmsBroker.class);
+        System.out.println("fake jsm broker: " + fakeJmsBroker);
     }
 
 }
