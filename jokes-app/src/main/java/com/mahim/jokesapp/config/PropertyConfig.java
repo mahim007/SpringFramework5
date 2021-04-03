@@ -1,7 +1,6 @@
 package com.mahim.jokesapp.config;
 
 import com.mahim.jokesapp.FakeDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +31,6 @@ public class PropertyConfig {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer properties() {
-        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-        return propertySourcesPlaceholderConfigurer;
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }
