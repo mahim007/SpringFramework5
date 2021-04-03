@@ -1,0 +1,28 @@
+# this is a comment
+
+name: Mahim
+names: # inline comment
+  - Mahim
+  - Nitol
+  - Ornob
+
+pound_sign: "#"
+book:
+  author: Ashraful Islam Mahim
+  publisher: Nitol Amin
+
+truth: yes
+another_truth: True
+more_true: true
+false: no #No, false, False
+string_val: "this is it's quote"
+colon_string: "my courses: one, two, three"
+include_new_lines: |
+  Ashraful Islam Mahim
+  Nitol Amin
+  Ashim Ayed
+
+ignore_new_line: >
+  Ashraful Islam Mahim
+    Nitol Amin
+    Ashim Ayed

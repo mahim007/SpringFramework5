@@ -37,4 +37,13 @@ public class FakeJmsBroker {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "FakeJmsBroker{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

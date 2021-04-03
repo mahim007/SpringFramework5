@@ -1,0 +1,8 @@
+jms:
+  user: mahim
+  password: password
+  dbUrl: http://localhost:8080/my-jms
+jokesapp:
+  user: joker
+  password: joker_password
+  dbUrl: joker_url
