@@ -26,7 +26,8 @@ public class PropertyConfig {
 
     @Bean
     public FakeDataSource fakeDataSource() {
-        FakeDataSource fakeDataSource = new FakeDataSource(env.getProperty("MAHIM_USERNAME"), password, dbUrl);
+        //FakeDataSource fakeDataSource = new FakeDataSource(env.getProperty("MAHIM_USERNAME"), password, dbUrl);
+        FakeDataSource fakeDataSource = new FakeDataSource(user, password, dbUrl);
         System.out.println("FakeDataSource:  " +  fakeDataSource);
         return fakeDataSource;
     }

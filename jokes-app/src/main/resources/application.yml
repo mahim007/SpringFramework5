@@ -6,3 +6,13 @@ jokesapp:
   user: joker
   password: joker_password
   dbUrl: joker_url
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+jokesapp:
+  user: joker_dev
+  password: joker_password_dev
+  dbUrl: joker_url_dev
