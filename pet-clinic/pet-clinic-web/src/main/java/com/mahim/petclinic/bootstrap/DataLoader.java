@@ -16,6 +16,7 @@ public class DataLoader implements CommandLineRunner {
     public DataLoader(OwnerService ownerService, VetService vetService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        System.out.println("hello from data loader");
     }
 
     @Override
