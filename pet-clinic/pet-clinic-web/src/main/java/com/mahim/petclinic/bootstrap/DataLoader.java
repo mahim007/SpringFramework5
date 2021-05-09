@@ -20,6 +20,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        System.out.println("hello from data loader");
         Owner owner1 = new Owner();
         owner1.setFirstName("Ashraful");
         owner1.setLastName("Mahim");
