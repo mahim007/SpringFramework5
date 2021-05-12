@@ -1,8 +1,10 @@
 package com.mahim.petclinic.bootstrap;
 
 import com.mahim.petclinic.model.Owner;
+import com.mahim.petclinic.model.PetType;
 import com.mahim.petclinic.model.Vet;
 import com.mahim.petclinic.service.OwnerService;
+import com.mahim.petclinic.service.PetTypeService;
 import com.mahim.petclinic.service.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,15 +14,24 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) {
-        System.out.println("hello from data loader");
+        PetType dog = new PetType();
+        dog.setName("Dog");
+        PetType savedDogType = petTypeService.save(dog);
+
+        PetType cat = new PetType();
+        cat.setName("Cat");
+        PetType savedCatType = petTypeService.save(cat);
+
         Owner owner1 = new Owner();
         owner1.setFirstName("Ashraful");
         owner1.setLastName("Mahim");
