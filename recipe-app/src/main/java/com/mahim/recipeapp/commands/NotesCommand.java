@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class NotesCommand {
     private Long id;
-    private String description;
+    private String recipeNotes;
 }
