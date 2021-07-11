@@ -1,11 +1,14 @@
 package com.mahim.recipeapp.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
+@ToString(exclude = "recipe")
 @Entity
 public class Notes {
     @Id
@@ -17,12 +20,4 @@ public class Notes {
 
     @Lob
     private String recipeNotes;
-
-    public Notes() {
-    }
-
-    protected boolean canEqual(final Object other) {
-        return other instanceof Notes;
-    }
-
 }

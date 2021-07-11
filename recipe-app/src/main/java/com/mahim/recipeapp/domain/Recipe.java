@@ -1,12 +1,14 @@
 package com.mahim.recipeapp.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@ToString(exclude = "notes")
 @Entity
 public class Recipe {
     @Id
@@ -42,9 +44,6 @@ public class Recipe {
     )
     private Set<Category> categories = new HashSet<>();
 
-    public Recipe() {
-    }
-
     public Recipe addIngredient(Ingredient ingredient){
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
@@ -52,7 +51,9 @@ public class Recipe {
     }
 
     public void setNotes(Notes notes) {
-        this.notes = notes;
-        notes.setRecipe(this);
+        if (notes != null) {
+            this.notes = notes;
+            notes.setRecipe(this);
+        }
     }
 }

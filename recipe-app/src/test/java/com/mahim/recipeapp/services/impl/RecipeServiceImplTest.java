@@ -1,5 +1,7 @@
 package com.mahim.recipeapp.services.impl;
 
+import com.mahim.recipeapp.converters.RecipeCommandToRecipe;
+import com.mahim.recipeapp.converters.RecipeToRecipeCommand;
 import com.mahim.recipeapp.domain.Recipe;
 import com.mahim.recipeapp.repositories.RecipeRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,11 +18,15 @@ import static org.mockito.Mockito.*;
 class RecipeServiceImplTest {
     RecipeServiceImpl recipeService;
     RecipeRepository recipeRepository;
+    RecipeCommandToRecipe recipeCommandToRecipe;
+    RecipeToRecipeCommand recipeToRecipeCommand;
 
     @BeforeEach
     void setUp() {
         recipeRepository = Mockito.mock(RecipeRepository.class);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeCommandToRecipe = Mockito.mock(RecipeCommandToRecipe.class);
+        recipeToRecipeCommand = Mockito.mock(RecipeToRecipeCommand.class);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
         Recipe recipe = new Recipe();
         HashSet recipeData = new HashSet();
         recipeData.add(recipe);

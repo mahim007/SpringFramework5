@@ -12,14 +12,13 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String description;
     private BigDecimal amount;
 
     @ManyToOne
     private Recipe recipe;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private UnitOfMeasure uom;
 
     public Ingredient() {

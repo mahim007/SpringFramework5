@@ -36,7 +36,7 @@ class RecipeControllerTest {
     void setUp() {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
-        when(recipeService.findById(anyLong())).thenReturn(java.util.Optional.of(recipe));
+        when(recipeService.findById(anyLong())).thenReturn(recipe);
     }
 
     @Test
