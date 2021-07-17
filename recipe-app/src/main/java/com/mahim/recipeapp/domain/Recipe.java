@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@ToString(exclude = "notes")
 @Entity
 public class Recipe {
     @Id
