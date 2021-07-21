@@ -1,12 +1,17 @@
 package com.mahim.recipeapp.services.impl;
 
 import com.mahim.recipeapp.commands.IngredientCommand;
+import com.mahim.recipeapp.commands.RecipeCommand;
+import com.mahim.recipeapp.converters.IngredientCommandToIngredient;
 import com.mahim.recipeapp.converters.IngredientToIngredientCommand;
+import com.mahim.recipeapp.domain.Ingredient;
 import com.mahim.recipeapp.domain.Recipe;
 import com.mahim.recipeapp.repositories.RecipeRepository;
+import com.mahim.recipeapp.repositories.UnitOfMeasureRepository;
 import com.mahim.recipeapp.services.IngredientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,11 +20,17 @@ import java.util.Optional;
 public class IngredientServiceImpl implements IngredientService {
 
     private final RecipeRepository recipeRepository;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final IngredientToIngredientCommand toIngredientCommand;
+    private final IngredientCommandToIngredient toIngredient;
 
-    public IngredientServiceImpl(RecipeRepository recipeRepository, IngredientToIngredientCommand toIngredientCommand) {
+    public IngredientServiceImpl(RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository,
+                                 IngredientToIngredientCommand toIngredientCommand,
+                                 IngredientCommandToIngredient toIngredient) {
         this.recipeRepository = recipeRepository;
+        this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.toIngredientCommand = toIngredientCommand;
+        this.toIngredient = toIngredient;
     }
 
     @Override
@@ -41,5 +52,36 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
         return ingredientCommandOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
+        if (recipeOptional.isEmpty()) {
+            log.debug("Recipe not found for id: " + ingredientCommand.getRecipeId());
+            return new IngredientCommand();
+        }
+
+        Recipe recipe = recipeOptional.get();
+        Optional<Ingredient> ingredientOptional = recipe.getIngredients().stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientCommand.getId()))
+                .findFirst();
+
+        if (ingredientOptional.isPresent()) {
+            Ingredient ingredient = ingredientOptional.get();
+            ingredient.setDescription(ingredientCommand.getDescription());
+            ingredient.setAmount(ingredientCommand.getAmount());
+            ingredient.setUom(unitOfMeasureRepository.findById(ingredientCommand.getUom().getId())
+                    .orElseThrow(() -> new RuntimeException("UOM not found.")));
+        } else {
+            recipe.addIngredient(toIngredient.convert(ingredientCommand));
+        }
+
+        Recipe savedRecipe = recipeRepository.save(recipe);
+        return toIngredientCommand.convert(savedRecipe.getIngredients().stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientCommand.getId()))
+                .findFirst()
+                .get());
     }
 }
