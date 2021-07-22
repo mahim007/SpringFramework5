@@ -1,7 +1,6 @@
 package com.mahim.recipeapp.services.impl;
 
 import com.mahim.recipeapp.commands.IngredientCommand;
-import com.mahim.recipeapp.commands.RecipeCommand;
 import com.mahim.recipeapp.converters.IngredientCommandToIngredient;
 import com.mahim.recipeapp.converters.IngredientToIngredientCommand;
 import com.mahim.recipeapp.domain.Ingredient;
@@ -79,9 +78,18 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
         Recipe savedRecipe = recipeRepository.save(recipe);
-        return toIngredientCommand.convert(savedRecipe.getIngredients().stream()
+        Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
                 .filter(ingredient -> ingredient.getId().equals(ingredientCommand.getId()))
-                .findFirst()
-                .get());
+                .findFirst();
+
+        if (!savedIngredientOptional.isPresent()) {
+            savedIngredientOptional = savedRecipe.getIngredients().stream()
+                    .filter(ingredient -> ingredient.getDescription().equals(ingredientCommand.getDescription()))
+                    .filter(ingredient -> ingredient.getAmount().equals(ingredientCommand.getAmount()))
+                    .filter(ingredient -> ingredient.getUom().getId().equals(ingredientCommand.getUom().getId()))
+                    .findFirst();
+        }
+
+        return toIngredientCommand.convert(savedIngredientOptional.get());
     }
 }
