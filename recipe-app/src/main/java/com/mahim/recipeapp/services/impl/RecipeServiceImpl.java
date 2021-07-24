@@ -4,6 +4,7 @@ import com.mahim.recipeapp.commands.RecipeCommand;
 import com.mahim.recipeapp.converters.RecipeCommandToRecipe;
 import com.mahim.recipeapp.converters.RecipeToRecipeCommand;
 import com.mahim.recipeapp.domain.Recipe;
+import com.mahim.recipeapp.exceptions.NotFoundException;
 import com.mahim.recipeapp.repositories.RecipeRepository;
 import com.mahim.recipeapp.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
         if (recipeOptional.isEmpty()) {
-            throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe with id " + id + " not found");
         }
 
         return recipeOptional.get();

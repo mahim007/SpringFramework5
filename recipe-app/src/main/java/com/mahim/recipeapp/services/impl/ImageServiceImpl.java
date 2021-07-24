@@ -3,6 +3,7 @@ package com.mahim.recipeapp.services.impl;
 import com.mahim.recipeapp.commands.RecipeCommand;
 import com.mahim.recipeapp.converters.RecipeToRecipeCommand;
 import com.mahim.recipeapp.domain.Recipe;
+import com.mahim.recipeapp.exceptions.NotFoundException;
 import com.mahim.recipeapp.repositories.RecipeRepository;
 import com.mahim.recipeapp.services.ImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class ImageServiceImpl implements ImageService {
             Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
             if (recipeOptional.isEmpty()) {
                 log.debug("recipe not found with id: " + recipeId);
-                //todo: handle with proper exception handling
+                throw new NotFoundException("Recipe with id " + recipeId + " not found");
             }
 
             Recipe recipe = recipeOptional.get();
@@ -54,8 +55,7 @@ public class ImageServiceImpl implements ImageService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if (recipeOptional.isEmpty()) {
             log.debug("recipe not found with id: " + recipeId);
-            //todo: add proper exception handling
-            return new byte[0];
+            throw new NotFoundException("Recipe with id " + recipeId + " not found");
         }
 
         RecipeCommand recipeCommand = toRecipeCommand.convert(recipeOptional.get());

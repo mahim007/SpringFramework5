@@ -5,6 +5,7 @@ import com.mahim.recipeapp.converters.IngredientCommandToIngredient;
 import com.mahim.recipeapp.converters.IngredientToIngredientCommand;
 import com.mahim.recipeapp.domain.Ingredient;
 import com.mahim.recipeapp.domain.Recipe;
+import com.mahim.recipeapp.exceptions.NotFoundException;
 import com.mahim.recipeapp.repositories.RecipeRepository;
 import com.mahim.recipeapp.repositories.UnitOfMeasureRepository;
 import com.mahim.recipeapp.services.IngredientService;
@@ -37,8 +38,8 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if (recipeOptional.isEmpty()) {
-            // todo: implement error handling
             log.debug("recipe id not found: " + recipeId);
+            throw new NotFoundException("Recipe with id " + recipeId+ " not found");
         }
 
         Recipe recipe = recipeOptional.get();
@@ -47,7 +48,7 @@ public class IngredientServiceImpl implements IngredientService {
                 .map(toIngredientCommand::convert).findFirst();
 
         if (ingredientCommandOptional.isEmpty()) {
-            // todo: implement error handling
+            throw new NotFoundException("RecipeCommand with id " + recipeId + " not found");
         }
 
         return ingredientCommandOptional.get();
@@ -98,6 +99,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if (recipeOptional.isEmpty()) {
             log.debug("recipe id not found: " + recipeId);
+            throw new NotFoundException("Recipe with id " + recipeId + " not found");
         }
 
         Recipe recipe = recipeOptional.get();
@@ -107,6 +109,7 @@ public class IngredientServiceImpl implements IngredientService {
 
         if (ingredientOptional.isEmpty()) {
             log.debug("ingredient not found for id: " + ingredientId);
+            throw new NotFoundException("Ingredient with id " + ingredientId + " not found");
         } else {
             Ingredient ingredient = ingredientOptional.get();
             ingredient.setRecipe(null);
