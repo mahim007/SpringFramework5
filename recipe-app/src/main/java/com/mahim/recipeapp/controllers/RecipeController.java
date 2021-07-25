@@ -42,7 +42,7 @@ public class RecipeController {
             return RECIPEFORM_URL;
         }
         RecipeCommand saveRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
-        return "redirect:/recipe/show/" + saveRecipeCommand.getId();
+        return "redirect:/recipe/" + saveRecipeCommand.getId() + "/show";
     }
 
     @GetMapping("/recipe/{id}/update")
