@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/recipeApp_prod
-    username: recipeApp_prod_user
-    password: _123maHim123_
+    url: jdbc:mysql://localhost:3306/sfg_prod
+    username: sfg_prod_user
+    password: guru
+    platform: mysql
   jpa:
     hibernate:
       ddl-auto: validate
